@@ -301,12 +301,12 @@ namespace GoogleARCore.Examples.Common
 
                 if (_notDetectedPlaneElapsed > OfferDetailedInstructionsDelay)
                 {
-                    _snackBarText.text = "Need Help?";
-                    _openButton.SetActive(true);
+                    // _snackBarText.text = "Need Help?";
+                    // _openButton.SetActive(true);
                 }
                 else
                 {
-                    _snackBarText.text = "Point your camera to where you want to place an object.";
+                    _snackBarText.text = "Наведите камеру на место, где хотите разместить объект";
                     _openButton.SetActive(false);
                 }
             }
