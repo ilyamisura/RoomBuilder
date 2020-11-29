@@ -33,23 +33,30 @@ public class AugmentedImageMainController : MonoBehaviour
         // not previously have a visualizer. Remove visualizers for stopped images.
         foreach (var image in _tempAugmentedImages)
         {
-            MarkerVisualizer marker = null;
-            
-            _visualizers.TryGetValue(image.DatabaseIndex, out marker);
-            if (image.TrackingState == TrackingState.Tracking && marker == null)
+            _visualizers.TryGetValue(image.DatabaseIndex, out var marker);
+
+            if (image.TrackingState == TrackingState.Tracking && marker == null && image.TrackingMethod == AugmentedImageTrackingMethod.FullTracking)
             {
                 DebugMessanger.ShowAndroidToastMessage($"Tracking image with index {image.DatabaseIndex}");
                 // Create an anchor to ensure that ARCore keeps tracking this augmented image.
                 Anchor anchor = image.CreateAnchor(image.CenterPose);
-                marker = (MarkerVisualizer) Instantiate(markerVisualizerPrefabs[0], anchor.transform);
+                marker = (MarkerVisualizer) Instantiate(markerVisualizerPrefabs[image.DatabaseIndex], anchor.transform);
                 marker.Image = image;
                 _visualizers.Add(image.DatabaseIndex, marker);
             }
-            else if (image.TrackingState == TrackingState.Stopped && marker != null)
+            else if (image.TrackingMethod == AugmentedImageTrackingMethod.LastKnownPose && marker != null)
             {
+                DebugMessanger.ShowAndroidToastMessage($"Destroy object {image.DatabaseIndex}");
                 _visualizers.Remove(image.DatabaseIndex);
                 GameObject.Destroy(marker.gameObject);
             }
+            // else if(image.TrackingState == TrackingState.Tracking && marker != null)
+            // {
+            //     if (Time.frameCount % 300 == 0)
+            //     {
+            //         DebugMessanger.ShowAndroidToastMessage($"Destroy object {image.DatabaseIndex}");
+            //     }
+            // }
         }
     }
 }
