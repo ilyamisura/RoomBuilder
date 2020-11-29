@@ -43,7 +43,7 @@ namespace GoogleARCore.Examples.AugmentedImage
         /// <summary>
         /// A prefab for visualizing an AugmentedImage.
         /// </summary>
-        public AugmentedImageVisualizer AugmentedImageVisualizerPrefab;
+        public AugmentedImageVisualizer [] AugmentedImageVisualizerPrefab;
 
         /// <summary>
         /// The overlay containing the fit to scan user guide.
@@ -100,8 +100,16 @@ namespace GoogleARCore.Examples.AugmentedImage
                 {
                     // Create an anchor to ensure that ARCore keeps tracking this augmented image.
                     Anchor anchor = image.CreateAnchor(image.CenterPose);
-                    visualizer = (AugmentedImageVisualizer)Instantiate(
-                        AugmentedImageVisualizerPrefab, anchor.transform);
+                    if (image.DatabaseIndex == 0)
+                    {
+                        visualizer = (AugmentedImageVisualizer)Instantiate(
+                        AugmentedImageVisualizerPrefab[image.DatabaseIndex], anchor.transform);
+                    }
+                    else
+                    {
+                        visualizer = (AugmentedImageVisualizer)Instantiate(
+                            AugmentedImageVisualizerPrefab[image.DatabaseIndex], anchor.transform);
+                    }
                     visualizer.Image = image;
                     _visualizers.Add(image.DatabaseIndex, visualizer);
                 }
