@@ -421,8 +421,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   markerVisualizerPrefabs:
-  - {fileID: -2980227114752683306, guid: ef5064e1ed7600d489a2c5e76bd23625, type: 3}
-  - {fileID: -2980227114752683306, guid: 1432e51eb10270d4aa83f2208e58e397, type: 3}
+  - {fileID: 6548986769788694106, guid: e17204f40af8fcb4bab099c00e386995, type: 3}
+  - {fileID: 2481888717522858073, guid: a667649bc0f801346a312dc8be5491c7, type: 3}
 --- !u!1001 &1596734136
 PrefabInstance:
   m_ObjectHideFlags: 0

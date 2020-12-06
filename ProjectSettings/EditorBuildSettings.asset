@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/RoomBuilder/Scenes/MainScene.unity
     guid: a09782212c909584c8c978dc47c2c905
+  - enabled: 1
+    path: Assets/RoomBuilder/Scenes/MarkersTracking.unity
+    guid: 1c13330c222bfe447aef3651bc5d8c78
   m_configObjects: {}
