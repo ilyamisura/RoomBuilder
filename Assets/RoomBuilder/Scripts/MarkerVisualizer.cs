@@ -11,12 +11,12 @@ public class MarkerVisualizer : MonoBehaviour
 
     public void Update()
     {
-        //if (Image == null || Image.TrackingState != TrackingState.Tracking)
-        //{
-        //    CubeModel.SetActive(false);
-        //    return;
-        //}
-
-        //CubeModel.SetActive(true);
+        if (Image == null || Image.TrackingState != TrackingState.Tracking)
+        {
+            CubeModel.SetActive(false);
+            return;
+        }
+        
+        CubeModel.SetActive(true);
     }
 }

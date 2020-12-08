@@ -22,7 +22,7 @@ public class AugmentedImageMainController : MonoBehaviour
 
     public void Start()
     {
-        DebugMessanger.ShowAndroidToastMessage("Hello world!");
+        DebugMessanger.ShowAndroidToastMessage("Сканирование...");
     }
 
     public void Update()

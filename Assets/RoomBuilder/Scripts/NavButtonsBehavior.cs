@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TrackingButtonBehavior : MonoBehaviour
+public class NavButtonsBehavior : MonoBehaviour
 {
+    public Scene Scene;
     // Start is called before the first frame update
-    public void OnTrackingButtonClick()
+    public void OnNavButtonClick()
     {
-        SceneManager.LoadScene("MarkersTracking");
+        SceneManager.LoadScene(Scene.handle);
     }
 }
