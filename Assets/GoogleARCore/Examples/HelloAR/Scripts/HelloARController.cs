@@ -18,6 +18,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using Assets.RoomBuilder.Scripts;
+
 namespace GoogleARCore.Examples.HelloAR
 {
     using System.Collections.Generic;
@@ -155,6 +157,7 @@ namespace GoogleARCore.Examples.HelloAR
                         hit.Pose.rotation * Vector3.up) < 0)
                 {
                     Debug.Log("Hit at back of the current DetectedPlane");
+                    DebugMessanger.ShowAndroidToastMessage("Miss! Lol");
                 }
                 else
                 {
@@ -163,6 +166,8 @@ namespace GoogleARCore.Examples.HelloAR
                         // Show depth card window if necessary.
                         DepthMenu.ConfigureDepthBeforePlacingFirstAsset();
                     }
+
+                    DebugMessanger.ShowAndroidToastMessage("Maesh garnuy hui!");
 
                     // Choose the prefab based on the Trackable that got hit.
                     GameObject prefab;

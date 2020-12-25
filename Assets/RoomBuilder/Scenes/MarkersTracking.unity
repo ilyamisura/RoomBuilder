@@ -566,8 +566,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   markerVisualizerPrefabs:
-  - {fileID: 6548986769788694106, guid: e17204f40af8fcb4bab099c00e386995, type: 3}
-  - {fileID: 2481888717522858073, guid: a667649bc0f801346a312dc8be5491c7, type: 3}
+  - {fileID: 6248800596031937957, guid: 5df77842246f6e94981978125e5d7c33, type: 3}
+  - {fileID: -3734253375054335837, guid: 5bdfa0dae9fea024f89eec60cf968be6, type: 3}
+  - {fileID: 5222364992030767000, guid: df8828043444d564daa1e4bec166078d, type: 3}
 --- !u!1001 &1596734136
 PrefabInstance:
   m_ObjectHideFlags: 0
