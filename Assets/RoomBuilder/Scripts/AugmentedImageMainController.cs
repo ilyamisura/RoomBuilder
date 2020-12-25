@@ -13,6 +13,8 @@ public class AugmentedImageMainController : MonoBehaviour
 
     private List<AugmentedImage> _tempAugmentedImages = new List<AugmentedImage>();
 
+    public GameObject FitToScanOverlay;
+
     public void Awake()
     {
         // Enable ARCore to target 60fps camera capture frame rate on supported devices.
@@ -22,7 +24,8 @@ public class AugmentedImageMainController : MonoBehaviour
 
     public void Start()
     {
-        DebugMessanger.ShowAndroidToastMessage("Сканирование...");
+        //DebugMessanger.ShowAndroidToastMessage("Сканирование...");
+        FitToScanOverlay.SetActive(true);
     }
 
     public void Update()
@@ -43,19 +46,20 @@ public class AugmentedImageMainController : MonoBehaviour
                 marker = (MarkerVisualizer) Instantiate(markerVisualizerPrefabs[image.DatabaseIndex], anchor.transform);
                 marker.Image = image;
                 _visualizers.Add(image.DatabaseIndex, marker);
+                FitToScanOverlay.SetActive(false);
             }
-            else if (image.TrackingMethod == AugmentedImageTrackingMethod.LastKnownPose && marker != null)
+            else if (image.TrackingState == TrackingState.Stopped && marker != null)
             {
-                DebugMessanger.ShowAndroidToastMessage($"Destroy object {image.DatabaseIndex}");
                 _visualizers.Remove(image.DatabaseIndex);
                 GameObject.Destroy(marker.gameObject);
             }
-            // else if(image.TrackingState == TrackingState.Tracking && marker != null)
+
+            // Условие при котором объект удаляется при исчезании маркера с поля видимости
+            // else if (image.TrackingMethod == AugmentedImageTrackingMethod.LastKnownPose && marker != null)
             // {
-            //     if (Time.frameCount % 300 == 0)
-            //     {
-            //         DebugMessanger.ShowAndroidToastMessage($"Destroy object {image.DatabaseIndex}");
-            //     }
+            //     DebugMessanger.ShowAndroidToastMessage($"Destroy object {image.DatabaseIndex}");
+            //     _visualizers.Remove(image.DatabaseIndex);
+            //     GameObject.Destroy(marker.gameObject);
             // }
         }
     }
