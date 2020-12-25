@@ -19,6 +19,7 @@
 //-----------------------------------------------------------------------
 
 using Assets.RoomBuilder.Scripts;
+using UnityEngine.UI;
 
 namespace GoogleARCore.Examples.HelloAR
 {
@@ -38,11 +39,8 @@ namespace GoogleARCore.Examples.HelloAR
     /// </summary>
     public class HelloARController : MonoBehaviour
     {
-        /// <summary>
-        /// The Depth Setting Menu.
-        /// </summary>
-        public DepthMenu DepthMenu;
-
+        [SerializeField]
+        private Button _clearSpaceButton;
         /// <summary>
         /// The Instant Placement Setting Menu.
         /// </summary>
@@ -86,6 +84,8 @@ namespace GoogleARCore.Examples.HelloAR
         /// </summary>
         private bool _isQuitting = false;
 
+        private List<GameObject> instGameObjects = new List<GameObject>();
+
         /// <summary>
         /// The Unity Awake() method.
         /// </summary>
@@ -94,6 +94,7 @@ namespace GoogleARCore.Examples.HelloAR
             // Enable ARCore to target 60fps camera capture frame rate on supported devices.
             // Note, Application.targetFrameRate is ignored when QualitySettings.vSyncCount != 0.
             Application.targetFrameRate = 60;
+            _clearSpaceButton.onClick.AddListener(OnClearSpaceButtonPressed);
         }
 
         /// <summary>
@@ -161,14 +162,6 @@ namespace GoogleARCore.Examples.HelloAR
                 }
                 else
                 {
-                    if (DepthMenu != null)
-                    {
-                        // Show depth card window if necessary.
-                        DepthMenu.ConfigureDepthBeforePlacingFirstAsset();
-                    }
-
-                    DebugMessanger.ShowAndroidToastMessage("Maesh garnuy hui!");
-
                     // Choose the prefab based on the Trackable that got hit.
                     GameObject prefab;
                     if (hit.Trackable is InstantPlacementPoint)
@@ -198,6 +191,7 @@ namespace GoogleARCore.Examples.HelloAR
 
                     // Instantiate prefab at the hit pose.
                     var gameObject = Instantiate(prefab, hit.Pose.position, hit.Pose.rotation);
+                    instGameObjects.Add(gameObject);
 
                     // Compensate for the hitPose rotation facing away from the raycast (i.e.
                     // camera).
@@ -291,6 +285,18 @@ namespace GoogleARCore.Examples.HelloAR
                             "makeText", unityActivity, message, 0);
                     toastObject.Call("show");
                 }));
+            }
+        }
+
+        private void OnClearSpaceButtonPressed()
+        {
+            if (instGameObjects == null && instGameObjects?.Count == 0)
+                return;
+
+            foreach (var item in instGameObjects)
+            {
+                instGameObjects.Remove(item);
+                Destroy(item.gameObject);
             }
         }
     }
