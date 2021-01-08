@@ -50,7 +50,7 @@ namespace GoogleARCore.Examples.HelloAR
         /// A prefab to place when an instant placement raycast from a user touch hits an instant
         /// placement point.
         /// </summary>
-        public GameObject InstantPlacementPrefab;
+        private GameObject InstantPlacementPrefab;
 
         /// <summary>
         /// The first-person camera being used to render the passthrough camera image (i.e. AR
@@ -58,20 +58,22 @@ namespace GoogleARCore.Examples.HelloAR
         /// </summary>
         public Camera FirstPersonCamera;
 
+        public List<ModelButtonHandler> ModelsButtons;
+
         /// <summary>
         /// A prefab to place when a raycast from a user touch hits a vertical plane.
         /// </summary>
-        public GameObject GameObjectVerticalPlanePrefab;
+        //public GameObject GameObjectVerticalPlanePrefab;
 
         /// <summary>
         /// A prefab to place when a raycast from a user touch hits a horizontal plane.
         /// </summary>
-        public GameObject GameObjectHorizontalPlanePrefab;
+        //public GameObject GameObjectHorizontalPlanePrefab;
 
         /// <summary>
         /// A prefab to place when a raycast from a user touch hits a feature point.
         /// </summary>
-        public GameObject GameObjectPointPrefab;
+        //public GameObject GameObjectPointPrefab;
 
         /// <summary>
         /// The rotation in degrees need to apply to prefab when it is placed.
@@ -95,6 +97,13 @@ namespace GoogleARCore.Examples.HelloAR
             // Note, Application.targetFrameRate is ignored when QualitySettings.vSyncCount != 0.
             Application.targetFrameRate = 60;
             _clearSpaceButton.onClick.AddListener(OnClearSpaceButtonPressed);
+            if (ModelsButtons == null || ModelsButtons.Count <= 0) 
+                return;
+            
+            foreach (var item in ModelsButtons)
+            {
+                item.Button.onClick.AddListener(() => { OnModelsButtonPressed(item); });
+            }
         }
 
         /// <summary>
@@ -158,7 +167,6 @@ namespace GoogleARCore.Examples.HelloAR
                         hit.Pose.rotation * Vector3.up) < 0)
                 {
                     Debug.Log("Hit at back of the current DetectedPlane");
-                    DebugMessanger.ShowAndroidToastMessage("Miss! Lol");
                 }
                 else
                 {
@@ -170,23 +178,23 @@ namespace GoogleARCore.Examples.HelloAR
                     }
                     else if (hit.Trackable is FeaturePoint)
                     {
-                        prefab = GameObjectPointPrefab;
+                        prefab = InstantPlacementPrefab;
                     }
                     else if (hit.Trackable is DetectedPlane)
                     {
                         DetectedPlane detectedPlane = hit.Trackable as DetectedPlane;
                         if (detectedPlane.PlaneType == DetectedPlaneType.Vertical)
                         {
-                            prefab = GameObjectVerticalPlanePrefab;
+                            prefab = InstantPlacementPrefab;
                         }
                         else
                         {
-                            prefab = GameObjectHorizontalPlanePrefab;
+                            prefab = InstantPlacementPrefab;
                         }
                     }
                     else
                     {
-                        prefab = GameObjectHorizontalPlanePrefab;
+                        prefab = InstantPlacementPrefab;
                     }
 
                     // Instantiate prefab at the hit pose.
@@ -295,9 +303,15 @@ namespace GoogleARCore.Examples.HelloAR
 
             foreach (var item in instGameObjects)
             {
-                instGameObjects.Remove(item);
                 Destroy(item.gameObject);
             }
+
+            instGameObjects = new List<GameObject>();
+        }
+
+        private void OnModelsButtonPressed(ModelButtonHandler buttonHandler)
+        {
+            InstantPlacementPrefab = buttonHandler.Model;
         }
     }
 }

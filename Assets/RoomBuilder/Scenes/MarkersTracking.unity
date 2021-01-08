@@ -566,10 +566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca96545c12c0f194fab29bb5dbca442c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  markerVisualizerPrefabs:
-  - {fileID: 6248800596031937957, guid: 5df77842246f6e94981978125e5d7c33, type: 3}
-  - {fileID: -3734253375054335837, guid: 5bdfa0dae9fea024f89eec60cf968be6, type: 3}
-  - {fileID: 5222364992030767000, guid: df8828043444d564daa1e4bec166078d, type: 3}
+  markerVisualizerPrefabs: []
   FitToScanOverlay: {fileID: 1510323364}
 --- !u!1 &1510323364
 GameObject:
